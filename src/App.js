@@ -16,6 +16,7 @@ class BooksApp extends React.Component {
     books:[],
   }
 
+
   componentDidMount(){
     this.getAllBooks();
   }
@@ -31,10 +32,25 @@ class BooksApp extends React.Component {
         this.getAllBooks()
       )
   }
+  getSearchBookResult=(query)=>{
+
+      BooksAPI.search(query).then(searchbook=>{
+
+
+            console.log(searchbook)
+        })
+
+  }
+
   render() {
     return (
       <div className="app">
-        <Route path="/search" component={BookSearch} />
+        <Route path="/search" render={()=>(
+          <BookSearch
+            books={this.state.books}
+            onChange={this.getSearchBookResult}
+          />
+        )} />
         <Route exact path="/" render={()=>(
           <ListBooks
             books={this.state.books}
